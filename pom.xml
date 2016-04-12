@@ -9,6 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <name>Interactive Console</name>
     <description>Interactive console application which will allow user to execute few commands.</description>
-
+    <url>https://github.com/szemyxz/InteractiveConsole</url>
 
 </project>
