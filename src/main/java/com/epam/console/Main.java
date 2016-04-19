@@ -16,11 +16,12 @@ public class Main {
     public static void main(String[] args){
         List<Command> activeCommand = new ArrayList<Command>();
         activeCommand.add(new Prompt());
-        activeCommand.add(new Exit());
-        activeCommand.add(new Unknown());
         activeCommand.add(new Dir());
         activeCommand.add(new Tree());
         activeCommand.add(new Cd());
+        activeCommand.add(new Exit());
+        //Unknown object have to be always last element of activeCommand list.
+        activeCommand.add(new Unknown());
 
         while(loopBool){
             System.out.print("[MyShell] " + parameter + ">");
