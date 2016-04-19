@@ -1,5 +1,7 @@
 package com.epam.console;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -8,36 +10,28 @@ import java.util.Scanner;
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
+    private static boolean loopBool = true;
+    static String parameter = "$";
 
     public static void main(String[] args){
-        String command;
-        String prompt ="$";
+        List<Command> activeCommand = new ArrayList<Command>();
+        activeCommand.add(new Prompt());
+        activeCommand.add(new Exit());
+        activeCommand.add(new Unknown());
 
-        do {
-            System.out.print("[MyShell] " + prompt + ">");
-            command = getUserString();
-            if (command.contains("prompt")){
-                if (command.contains("reset")){
-                    prompt = "$";
-                }
-                else if (command.contains("$cwd")){
-                    prompt = System.getProperty("user.dir");
-                }
-                else {
-                    prompt = command.substring(7);
-                }
+        while(loopBool){
+            System.out.print("[MyShell] " + parameter + ">");
+            String userCommand = getUserString();
 
+            for (Command command : activeCommand) {
+                if (command.matches(userCommand)) {
+                    command.executeCommand();
+                    loopBool = command.endLoop();
+                    break; //handle the first matching command only
+                }
             }
-            else if (command.contentEquals("exit")){
-                System.out.println("Bye.");
-                scanner.close();
-            }
-            else {
-                System.out.print(command + " : unknown command \n");
-            }
-
         }
-        while (!command.contentEquals("exit"));
+
     }
 
     private static String getUserString(){
