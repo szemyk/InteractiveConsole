@@ -11,7 +11,10 @@ class Unknown implements Command {
     private String command;
 
     public boolean matches(String command) {
-        if (!command.matches("prompt (.*)") && !command.matches("exit") && !command.matches("dir")){
+        if (!command.matches("prompt (.*)")
+                && !command.matches("exit")
+                && !command.matches("dir")
+                && !command.matches("tree")){
             this.command = command;
             return true;
         }

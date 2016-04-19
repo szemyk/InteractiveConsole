@@ -13,8 +13,7 @@ import java.io.File;
 
 class Dir implements Command{
     private String workingDir = System.getProperty("user.dir");
-    private File dir = new File(workingDir);
-    private File[] files = dir.listFiles();
+    private File[] files = new File(workingDir).listFiles();
 
     public boolean matches(String command) {
         return command.matches("dir");
