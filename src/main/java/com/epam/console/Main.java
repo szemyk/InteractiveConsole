@@ -18,6 +18,7 @@ public class Main {
         activeCommand.add(new Prompt());
         activeCommand.add(new Exit());
         activeCommand.add(new Unknown());
+        activeCommand.add(new Dir());
 
         while(loopBool){
             System.out.print("[MyShell] " + parameter + ">");
