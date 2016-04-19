@@ -14,7 +14,8 @@ class Unknown implements Command {
         if (!command.matches("prompt (.*)")
                 && !command.matches("exit")
                 && !command.matches("dir")
-                && !command.matches("tree")){
+                && !command.matches("tree")
+                && !command.matches("cd")){
             this.command = command;
             return true;
         }
