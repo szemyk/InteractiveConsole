@@ -12,7 +12,6 @@ import java.io.File;
  */
 
 class Dir implements Command{
-    private File[] files;
 
     public boolean matches(String command) {
         return command.matches("dir");
@@ -27,17 +26,18 @@ class Dir implements Command{
         return true;
     }
 
-    private File[] getAllFiles(File currDir){
-        files = currDir.listFiles();
-        System.out.println("Content of " + currDir.getAbsolutePath());
-        for (File f : files) {
-            if (f.isDirectory()) {
-                System.out.println("DIR \t\t" + f.getName());
-            }
-            else {
-                System.out.println("FILE \t\t" + f.getName());
+    private void getAllFiles(File currDir){
+        File [] files = currDir.listFiles();
+        if (files != null) {
+            System.out.println("Content of " + currDir.getAbsolutePath());
+            for (File f : files) {
+                if (f.isDirectory()) {
+                    System.out.println("DIR \t\t" + f.getName());
+                } else {
+                    System.out.println("FILE \t\t" + f.getName());
+                }
             }
         }
-        return files;
+        else System.out.println("This pathname does not denote a directory, then listFiles() returns null");
     }
 }
