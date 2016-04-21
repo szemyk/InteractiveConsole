@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean loopBool = true;
-    static String parameter = "$";
+    static Parameter parameter = new Parameter();
 
     public static void main(String[] args){
         List<Command> activeCommand = new ArrayList<Command>();
@@ -24,7 +24,7 @@ public class Main {
         activeCommand.add(new Unknown());
 
         while(loopBool){
-            System.out.print("[MyShell] " + parameter + ">");
+            System.out.print("[MyShell] " + parameter.getParameter() + ">");
             String userCommand = getUserString();
 
             for (Command command : activeCommand) {

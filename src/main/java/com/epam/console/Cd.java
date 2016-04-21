@@ -1,5 +1,7 @@
 package com.epam.console;
 
+import java.io.File;
+
 /**
  * Class for cd command.
  * User can change the current working directory using a ‘cd’ command with a parameter:
@@ -8,17 +10,42 @@ package com.epam.console;
  */
 
 class Cd implements Command {
+    private String command;
 
     public boolean matches(String command) {
-        return command.matches("cd");
+        if (command.matches("cd (.*)")){
+            this.command = command;
+            return true;
+        }
+        else return false;
     }
 
     public void executeCommand() {
-        System.out.println("cd");
-        //to do something with this command
+        if(command.matches("cd ..")){
+            File directory = new File(Main.parameter.getPath());
+            if (directory.getParent() != null) {
+                setDir(directory.getParent());
+            }
+            else System.out.println("This path does not have parent directory");
+        }
+        else {
+            command = command.substring(3);
+            File directory = new File(command).getAbsoluteFile();
+            if(directory.exists()){
+                setDir(directory.getAbsolutePath());
+            }
+            else System.out.println("This directory does not exists in this scope");
+        }
     }
 
     public boolean endLoop() {
         return true;
     }
+
+    private void setDir(String varDir){
+        Main.parameter.setParameter(varDir);
+        System.setProperty("user.dir", varDir);
+        Main.parameter.setPath(System.getProperty("user.dir"));
+    }
+
 }
