@@ -11,6 +11,7 @@ import java.io.File;
 
 class Cd implements Command {
     private String command;
+    private Parameter parameter = Parameter.getInstance();
 
     public boolean matches(String command) {
         if (command.matches("cd (.*)")){
@@ -22,7 +23,7 @@ class Cd implements Command {
 
     public void executeCommand() {
         if(command.matches("cd ..")){
-            File directory = new File(Main.parameter.getPath());
+            File directory = new File(parameter.getPath());
             if (directory.getParent() != null) {
                 setDir(directory.getParent());
             }
@@ -43,9 +44,9 @@ class Cd implements Command {
     }
 
     private void setDir(String varDir){
-        Main.parameter.setParameter(varDir);
+        parameter.setParameter(varDir);
         System.setProperty("user.dir", varDir);
-        Main.parameter.setPath(System.getProperty("user.dir"));
+        parameter.setPath(System.getProperty("user.dir"));
     }
 
 }

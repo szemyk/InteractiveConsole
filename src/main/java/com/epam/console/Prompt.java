@@ -21,14 +21,15 @@ class Prompt implements Command {
     }
 
     public void executeCommand() {
+        Parameter parameter = Parameter.getInstance();
         if(command.matches("prompt reset")){
-            Main.parameter.setParameter("$");
+            parameter.setParameter("$");
         }
         else if (command.matches("prompt \\$cwd")){
-            Main.parameter.setParameter(System.getProperty("user.dir"));
+            parameter.setParameter(System.getProperty("user.dir"));
         }
         else {
-            Main.parameter.setParameter(command.substring(7));
+            parameter.setParameter(command.substring(7));
         }
     }
 

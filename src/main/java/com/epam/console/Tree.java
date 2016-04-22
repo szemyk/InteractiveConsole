@@ -15,7 +15,8 @@ class Tree implements Command{
     }
 
     public void executeCommand() {
-        File currDir = new File(Main.parameter.getPath());
+        Parameter parameter = Parameter.getInstance();
+        File currDir = new File(parameter.getPath());
         System.out.print(printTree(currDir));
     }
 

@@ -11,9 +11,9 @@ import java.util.Scanner;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean loopBool = true;
-    static Parameter parameter = new Parameter();
 
     public static void main(String[] args){
+        Parameter parameter = Parameter.getInstance();
         List<Command> activeCommand = new ArrayList<Command>();
         activeCommand.add(new Prompt());
         activeCommand.add(new Dir());
