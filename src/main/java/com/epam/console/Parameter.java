@@ -1,5 +1,8 @@
 package com.epam.console;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class for parameter using in commands.
  * To create this class, was used Singleton pattern.
@@ -7,17 +10,10 @@ package com.epam.console;
  * and provides a global point of access to that instance.
  */
 
-class Parameter {
+class Parameter implements ConcreteObserver {
+    private List<Observer> observers = new ArrayList<Observer>();
     private String parameter = "$";
     private String path = System.getProperty("user.dir");
-    private static Parameter ourInstance = new Parameter();
-
-    static Parameter getInstance() {
-        return ourInstance;
-    }
-
-    private Parameter(){
-    }
 
     String getParameter() {
         return parameter;
@@ -25,6 +21,7 @@ class Parameter {
 
     void setParameter(String parameter) {
         this.parameter = parameter;
+        notifyAllObservers();
     }
 
     String getPath(){
@@ -33,5 +30,20 @@ class Parameter {
 
     void setPath(String parameter){
         this.path = parameter;
+        notifyAllObservers();
+    }
+
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void deleteObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyAllObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
     }
 }

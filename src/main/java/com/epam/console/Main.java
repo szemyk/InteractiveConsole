@@ -13,12 +13,12 @@ public class Main {
     private static boolean loopBool = true;
 
     public static void main(String[] args){
-        Parameter parameter = Parameter.getInstance();
+        Parameter parameter = new Parameter();
         List<Command> activeCommand = new ArrayList<Command>();
-        activeCommand.add(new Prompt());
-        activeCommand.add(new Dir());
-        activeCommand.add(new Tree());
-        activeCommand.add(new Cd());
+        activeCommand.add(new Prompt(parameter));
+        activeCommand.add(new Dir(parameter));
+        activeCommand.add(new Tree(parameter));
+        activeCommand.add(new Cd(parameter));
         activeCommand.add(new Exit());
         //Unknown object have to be always last element of activeCommand list.
         activeCommand.add(new Unknown());

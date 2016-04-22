@@ -11,15 +11,22 @@ import java.io.File;
  * FILE     pom.xml
  */
 
-class Dir implements Command{
+class Dir implements Command, Observer{
+    private Parameter parameter;
+    private String path;
+
+    Dir(Parameter parameter){
+        this.parameter = parameter;
+        parameter.addObserver(this);
+        this.path = parameter.getPath();
+    }
 
     public boolean matches(String command) {
         return command.matches("dir");
     }
 
     public void executeCommand() {
-        Parameter parameter = Parameter.getInstance();
-        File currDir = new File(parameter.getPath());
+        File currDir = new File(path);
         getAllFiles(currDir);
     }
 
@@ -40,5 +47,9 @@ class Dir implements Command{
             }
         }
         else System.out.println("This pathname does not denote a directory, then listFiles() returns null");
+    }
+
+    public void update() {
+        this.path = parameter.getPath();
     }
 }

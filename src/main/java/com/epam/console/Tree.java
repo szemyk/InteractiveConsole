@@ -8,15 +8,22 @@ import java.io.File;
  * and its subdirectories using a ‘tree’ command.
  */
 
-class Tree implements Command{
+class Tree implements Command, Observer{
+    private Parameter parameter;
+    private String path;
+
+    Tree(Parameter parameter){
+        this.parameter = parameter;
+        parameter.addObserver(this);
+        this.path = parameter.getPath();
+    }
 
     public boolean matches(String command) {
         return command.matches("tree");
     }
 
     public void executeCommand() {
-        Parameter parameter = Parameter.getInstance();
-        File currDir = new File(parameter.getPath());
+        File currDir = new File(path);
         System.out.print(printTree(currDir));
     }
 
@@ -51,5 +58,9 @@ class Tree implements Command{
             sb.append("-");
         }
         return sb.toString();
+    }
+
+    public void update() {
+        this.path = parameter.getPath();
     }
 }

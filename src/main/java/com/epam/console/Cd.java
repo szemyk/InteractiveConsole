@@ -9,9 +9,16 @@ import java.io.File;
  * - Name of existing subdirectory
  */
 
-class Cd implements Command {
+class Cd implements Command, Observer {
+    private Parameter parameter;
     private String command;
-    private Parameter parameter = Parameter.getInstance();
+    private String path;
+
+    Cd(Parameter parameter){
+        this.parameter = parameter;
+        parameter.addObserver(this);
+        this.path = parameter.getPath();
+    }
 
     public boolean matches(String command) {
         if (command.matches("cd (.*)")){
@@ -23,7 +30,7 @@ class Cd implements Command {
 
     public void executeCommand() {
         if(command.matches("cd ..")){
-            File directory = new File(parameter.getPath());
+            File directory = new File(path);
             if (directory.getParent() != null) {
                 setDir(directory.getParent());
             }
@@ -49,4 +56,7 @@ class Cd implements Command {
         parameter.setPath(System.getProperty("user.dir"));
     }
 
+    public void update() {
+        this.path = parameter.getPath();
+    }
 }

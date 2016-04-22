@@ -9,8 +9,14 @@ package com.epam.console;
  * - Any other string will display the parameter in the prompt
  */
 
-class Prompt implements Command {
+class Prompt implements Command, Observer {
     private String command;
+    private Parameter parameter;
+
+    Prompt(Parameter parameter){
+        this.parameter = parameter;
+        parameter.addObserver(this);
+    }
 
     public boolean matches(String command) {
         if (command.matches("prompt (.*)")){
@@ -21,7 +27,6 @@ class Prompt implements Command {
     }
 
     public void executeCommand() {
-        Parameter parameter = Parameter.getInstance();
         if(command.matches("prompt reset")){
             parameter.setParameter("$");
         }
@@ -35,5 +40,8 @@ class Prompt implements Command {
 
     public boolean endLoop(){
         return true;
+    }
+
+    public void update() {
     }
 }
